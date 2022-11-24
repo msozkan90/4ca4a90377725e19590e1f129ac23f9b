@@ -9,32 +9,44 @@ base="TRY"
 
 
 
-def get_current_currency_api_layer():
+# def get_current_currency_api_layer():
 
-    response = requests.request("GET", f"https://api.apilayer.com/exchangerates_data/latest?symbols=&base={base}", headers={"apikey": "DLDK3ipbf0Lo85OVjj5pchPyDfLk1HOS"}, data = {})
-    result = response.json()
-    currency_list=[result["rates"]["TRY"],result["rates"]["EUR"],result["rates"]["USD"]]
-    return currency_list
+#     response = requests.request("GET", f"https://api.apilayer.com/exchangerates_data/latest?symbols=&base={base}", headers={"apikey": "DLDK3ipbf0Lo85OVjj5pchPyDfLk1HOS"}, data = {})
+    
+#     result = response.json()
+#     currency_list=[result["rates"]["TRY"],result["rates"]["EUR"],result["rates"]["USD"]]
+#     return currency_list
 
-def get_current_currency_freecurrencyapi():
-
-    response = requests.request("GET", f"https://api.freecurrencyapi.com/v1/latest?apikey=1zlJTNqgEBcVtQQsZfcFslbgln3CE0KzpAykQL94&base_currency={base}", headers={"apikey": "1zlJTNqgEBcVtQQsZfcFslbgln3CE0KzpAykQL94"}, data = {})
-    result = response.json()
-    currency_list=[result["data"]["TRY"],result["data"]["EUR"],result["data"]["USD"]]
-    return currency_list
 
 def get_date_currency_api_layer(date):
-
-    response = requests.request("GET", f"https://api.apilayer.com/exchangerates_data/{date}?symbols=EUR%2CUSD%2CTRY&base={base}", headers={"apikey": "DLDK3ipbf0Lo85OVjj5pchPyDfLk1HOS"}, data = {})
+    if date == "":
+        response = requests.request("GET", f"https://api.apilayer.com/exchangerates_data/latest?symbols=&base={base}", headers={"apikey": "DLDK3ipbf0Lo85OVjj5pchPyDfLk1HOS"}, data = {})
+    else:
+        response = requests.request("GET", f"https://api.apilayer.com/exchangerates_data/{date}?symbols=EUR%2CUSD%2CTRY&base={base}", headers={"apikey": "DLDK3ipbf0Lo85OVjj5pchPyDfLk1HOS"}, data = {})
     result = response.json()
     currency_list=[result["rates"]["TRY"],result["rates"]["EUR"],result["rates"]["USD"]]
     return currency_list
 
-def get_date_currency_freecurrencyapi(date):
 
-    response = requests.request("GET", f"https://api.freecurrencyapi.com/v1/historical?apikey=1zlJTNqgEBcVtQQsZfcFslbgln3CE0KzpAykQL94&date_from={date}&date_to={date}&base_currency={base}", headers={"apikey": "1zlJTNqgEBcVtQQsZfcFslbgln3CE0KzpAykQL94"}, data = {})
-    result = response.json()
-    currency_list=[result["data"][date]["TRY"],result["data"][date]["EUR"],result["data"][date]["USD"]]
+
+
+# def get_current_currency_freecurrencyapi():
+
+#     response = requests.request("GET", f"https://api.freecurrencyapi.com/v1/latest?apikey=1zlJTNqgEBcVtQQsZfcFslbgln3CE0KzpAykQL94&base_currency={base}", headers={"apikey": "1zlJTNqgEBcVtQQsZfcFslbgln3CE0KzpAykQL94"}, data = {})
+#     result = response.json()
+#     currency_list=[result["data"]["TRY"],result["data"]["EUR"],result["data"]["USD"]]
+#     return currency_list
+
+
+def get_date_currency_freecurrencyapi(date):
+    if date == "":   
+        response = requests.request("GET", f"https://api.freecurrencyapi.com/v1/latest?apikey=1zlJTNqgEBcVtQQsZfcFslbgln3CE0KzpAykQL94&base_currency={base}", headers={"apikey": "1zlJTNqgEBcVtQQsZfcFslbgln3CE0KzpAykQL94"}, data = {})
+        result = response.json()
+        currency_list=[result["data"]["TRY"],result["data"]["EUR"],result["data"]["USD"]]
+    else:
+        response = requests.request("GET", f"https://api.freecurrencyapi.com/v1/historical?apikey=1zlJTNqgEBcVtQQsZfcFslbgln3CE0KzpAykQL94&date_from={date}&date_to={date}&base_currency={base}", headers={"apikey": "1zlJTNqgEBcVtQQsZfcFslbgln3CE0KzpAykQL94"}, data = {})
+        result = response.json()
+        currency_list=[result["data"][date]["TRY"],result["data"][date]["EUR"],result["data"][date]["USD"]]
     return currency_list
 
 
@@ -42,12 +54,8 @@ def get_all_currency(date):
     TRY=[]
     USD=[]
     EUR=[]
-    if date == "":
-        list1=get_current_currency_api_layer()
-        list2=get_current_currency_freecurrencyapi()
-    else:
-        list1=get_date_currency_api_layer(date)
-        list2=get_date_currency_freecurrencyapi(date)
+    list1=get_date_currency_api_layer(date)
+    list2=get_date_currency_freecurrencyapi(date)
     TRY.append(list1[0])
     TRY.append(list2[0])
     EUR.append(list1[1])
