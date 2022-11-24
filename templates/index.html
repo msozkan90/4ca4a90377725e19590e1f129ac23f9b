@@ -13,32 +13,39 @@
                        
                         <div class="col-md-12">
                             <h2 class="pt-3 pb-4 text-center font-bold font-up deep-purple-text">Tarihe göre ara</h2>
-                            <div class="input-group md-form form-sm form-2 pl-0">
-                                <input class="form-control my-0 py-1 pl-3 purple-border" type="text" placeholder="Ara..." aria-label="Search">
-                                <span class="input-group-addon waves-effect purple lighten-2" id="basic-addon1"><a><i class="fa fa-search white-text" aria-hidden="true"></i></a></span>
+                            <div class="calendar-assets">
+                                <div class="field">
+                                
+                                    <form class="form-input" id="date-search" onsubmit="return setDate(this)">
+                                        <input type="date" class="text-field" name="date" id="date" required>
+                                        <button type="submit" class="btn btn-small btn-primary" title="Ara"><i class="fas fa-search text-white"></i></button>
+                                    </form>
+                                </div>
+                    
                             </div>
                         </div>
                     
                     </div>
          
                     <table class="table table-striped">
-                      
+            
                         <thead>
                             <tr>
-                                <th>#</th>
-                                <th>First Name</th>
-                                <th>Last Name</th>
-                                <th>Username</th>
+                                <th>Güncel Kurlar</th>
+                                <th></th>
+
                             </tr>
                         </thead>
               
                         <tbody>
+                            {% for name_curr,result in zipList %}
                             <tr>
-                                <th scope="row">1</th>
-                                <td>Mark</td>
-                                <td>Otto</td>
-                                <td>@mdo</td>
+                            
+                                <td>{{name_curr}}</td>
+                                <td>{{result}}</td>                
                             </tr>
+                            {% endfor %}
+               
 
                         </tbody>
                         <!--Table body-->
