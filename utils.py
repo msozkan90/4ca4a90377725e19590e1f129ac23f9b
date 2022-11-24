@@ -1,15 +1,3 @@
-# DLDK3ipbf0Lo85OVjj5pchPyDfLk1HOS
-# ae224d4a7302a1a8e8efa3d8
-
-from flask import Flask,render_template,request
-import requests
-
-app = Flask(__name__)
-
-
-
-
-
 import requests
 
 Urls=[  "https://api.apilayer.com/exchangerates_data/latest?symbols=&base=TRY",
@@ -58,6 +46,9 @@ def get_current_currency():
         currency=get_cheaper_curency(USD,TRY,EUR)
         return currency
 
+get_current_currency()
+
+
 
 def get_cheaper_curency(USD,TRY,EUR):
     usd=min(USD)
@@ -65,36 +56,3 @@ def get_cheaper_curency(USD,TRY,EUR):
     eur=min(EUR)
     return [usd,tl,eur]
 
-
-
-
-
-
-
-
-
-
-
-
-# @app.route("/",methods = ["GET","POST"])
-# def index():
-#     name_curr=["usd","tl","eur"]
-#     result=get_current_currency()
-#     if request.method == "POST":
-
-#         return render_template("index.html")
-#     zipList=zip(name_curr,result)
-#     return render_template("index.html",zipList=zipList)
-
-
-@app.route("/",methods = ["GET","POST"])
-def index():
-    name_curr=["usd","tl","eur"]
-
-    return render_template("index.html")
-
-
-
-
-if __name__ == "__main__":
-    app.run(debug=True)
