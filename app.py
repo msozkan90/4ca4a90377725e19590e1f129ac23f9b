@@ -6,90 +6,72 @@ app = Flask(__name__)
 import requests
 
 base="TRY"
-date="2020-03-03"
-
-Urls=[ 
-    f"https://api.apilayer.com/exchangerates_data/latest?symbols=&base={base}",
-
-     f"https://api.freecurrencyapi.com/v1/latest?apikey=1zlJTNqgEBcVtQQsZfcFslbgln3CE0KzpAykQL94&base_currency={base}",
-      
-    ]
-
-HistoryUrls=[  
-    f"https://api.apilayer.com/exchangerates_data/{date}?symbols=symbols&base={base}",
-    f"https://api.freecurrencyapi.com/v1/historical?apikey=1zlJTNqgEBcVtQQsZfcFslbgln3CE0KzpAykQL94&date_from={date}&date_to={date}&base_currency={base}",
-
-    ]
 
 
-ApiKeys=[  "DLDK3ipbf0Lo85OVjj5pchPyDfLk1HOS",
-           "1zlJTNqgEBcVtQQsZfcFslbgln3CE0KzpAykQL94"
-    ]
-# headers= {
-#   "apikey": "DLDK3ipbf0Lo85OVjj5pchPyDfLk1HOS",
-#   "apikey": "1zlJTNqgEBcVtQQsZfcFslbgln3CE0KzpAykQL94"
-# }
-payload=[  {},
-           {}
-    ]
-parameter=[  "rates",
-             "data"
-    ]
 
-def get_headers(apikey):
-    headers= {
-    "apikey": apikey}
-    return headers
+def get_current_currency_api_layer():
 
+    response = requests.request("GET", f"https://api.apilayer.com/exchangerates_data/latest?symbols=&base={base}", headers={"apikey": "DLDK3ipbf0Lo85OVjj5pchPyDfLk1HOS"}, data = {})
+    result = response.json()
+    currency_list=[result["rates"]["TRY"],result["rates"]["EUR"],result["rates"]["USD"]]
+    return currency_list
 
-USD=[]
-TRY=[]
-EUR=[]
+def get_current_currency_freecurrencyapi():
 
+    response = requests.request("GET", f"https://api.freecurrencyapi.com/v1/latest?apikey=1zlJTNqgEBcVtQQsZfcFslbgln3CE0KzpAykQL94&base_currency={base}", headers={"apikey": "1zlJTNqgEBcVtQQsZfcFslbgln3CE0KzpAykQL94"}, data = {})
+    result = response.json()
+    currency_list=[result["data"]["TRY"],result["data"]["EUR"],result["data"]["USD"]]
+    return currency_list
 
-def get_current_currency():
-    for index, item in enumerate(Urls, start=0):
-        response = requests.request("GET", Urls[index], headers=get_headers(ApiKeys[index]), data = payload[index])
-        result = response.json()
-        USD.append(result[parameter[index]]["USD"])       
-        TRY.append(result[parameter[index]]["TRY"])
-        EUR.append(result[parameter[index]]["EUR"])
+def get_date_currency_api_layer(date):
 
-        currency=get_cheaper_curency(USD,TRY,EUR)
-    return currency
+    response = requests.request("GET", f"https://api.apilayer.com/exchangerates_data/{date}?symbols=EUR%2CUSD%2CTRY&base={base}", headers={"apikey": "DLDK3ipbf0Lo85OVjj5pchPyDfLk1HOS"}, data = {})
+    result = response.json()
+    currency_list=[result["rates"]["TRY"],result["rates"]["EUR"],result["rates"]["USD"]]
+    return currency_list
+
+def get_date_currency_freecurrencyapi(date):
+
+    response = requests.request("GET", f"https://api.freecurrencyapi.com/v1/historical?apikey=1zlJTNqgEBcVtQQsZfcFslbgln3CE0KzpAykQL94&date_from={date}&date_to={date}&base_currency={base}", headers={"apikey": "1zlJTNqgEBcVtQQsZfcFslbgln3CE0KzpAykQL94"}, data = {})
+    result = response.json()
+    currency_list=[result["data"][date]["TRY"],result["data"][date]["EUR"],result["data"][date]["USD"]]
+    return currency_list
 
 
-def get_cheaper_curency(USD,TRY,EUR):
-    print(USD)
-    print(TRY)
-    print(EUR)
+def get_all_currency(date):
+    TRY=[]
+    USD=[]
+    EUR=[]
+    if date == "":
+        list1=get_current_currency_api_layer()
+        list2=get_current_currency_freecurrencyapi()
+    else:
+        list1=get_date_currency_api_layer(date)
+        list2=get_date_currency_freecurrencyapi(date)
+    TRY.append(list1[0])
+    TRY.append(list2[0])
+    EUR.append(list1[1])
+    EUR.append(list2[1])
+    USD.append(list1[2])
+    USD.append(list2[2])
     usd=min(USD)
     tl=min(TRY)
     eur=min(EUR)
-    return [usd,tl,eur]
-
-
-
-
-
-# @app.route("/",methods = ["GET","POST"])
-# def index():
-#     name_curr=["usd","tl","eur"]
-#     result=get_current_currency()
-#     print(result)
-#     if request.method == "POST":
-#         return render_template("index.html")
-#     zipList=zip(name_curr,result)
-#     return render_template("index.html",zipList=zipList)
+    return [tl,usd,eur]
 
 
 @app.route("/",methods = ["GET","POST"])
 def index():
-    name_curr=["usd","tl","eur"]
-
-    return render_template("index.html")
-
-
+    name_curr=["TL","USD","EUR"]
+    date=""
+    result=get_all_currency(date)
+    zipList=zip(name_curr,result)
+    if request.method == "POST":
+        date=request.form['date']
+        result=get_all_currency(date)
+        zipList_date=zip(name_curr,result)
+        return render_template("index.html",zipList_date=zipList_date,zipList=zipList)
+    return render_template("index.html",zipList=zipList)
 
 
 if __name__ == "__main__":

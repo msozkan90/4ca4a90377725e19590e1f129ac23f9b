@@ -15,12 +15,36 @@
                             <h2 class="pt-3 pb-4 text-center font-bold font-up deep-purple-text">Tarihe göre ara</h2>
                             <div class="calendar-assets">
                                 <div class="field">
-                                
-                                    <form class="form-input" id="date-search" onsubmit="return setDate(this)">
+                                    <form class="form-input" id="date-search" onsubmit="return setDate(this)" method="post">
                                         <input type="date" class="text-field" name="date" id="date" required>
                                         <button type="submit" class="btn btn-small btn-primary" title="Ara"><i class="fas fa-search text-white"></i></button>
                                     </form>
                                 </div>
+
+                                    <table class="table table-striped">
+            
+                                        <thead>
+                                            <tr>
+                                                <th>Tarihe Göre</th>
+                                                <th></th>
+                
+                                            </tr>
+                                        </thead>
+                              
+                                        <tbody>
+                                            {% for name_curr,result in zipList_date %}
+                                            <tr>
+                                            
+                                                <td>{{name_curr}}</td>
+                                                <td>{{result}}</td>                
+                                            </tr>
+                                            {% endfor %}
+                               
+                
+                                        </tbody>
+                                        <!--Table body-->
+                                    </table>
+                              
                     
                             </div>
                         </div>
