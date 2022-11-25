@@ -5,58 +5,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Kur Uygulaması</title>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.4.1/css/mdb.min.css">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@300&display=swap" rel="stylesheet">
     <style>
-        .darken-grey-text {
-            color: #2E2E2E;
-        }
-        .input-group.md-form.form-sm.form-2 input {
-            border: 1px solid #bdbdbd;
-            border-top-left-radius: 0.25rem;
-            border-bottom-left-radius: 0.25rem;
-        }
-        .input-group.md-form.form-sm.form-2 input.purple-border {
-            border: 1px solid #9e9e9e;
-        }
-        .input-group.md-form.form-sm.form-2 input[type=text]:focus:not([readonly]).purple-border {
-            border: 1px solid #ba68c8;
-            box-shadow: none;
-        }
-        .form-2 .input-group-addon {
-            border: 1px solid #ba68c8;
-        }
-        .danger-text {
-            color: #ff3547; 
-        }  
-        .success-text {
-            color: #00C851; 
-        }
-        .table-bordered.red-border, .table-bordered.red-border th, .table-bordered.red-border td {
-            border: 1px solid #ff3547!important;
-        }        
-        .table.table-bordered th {
-            text-align: center;
-        }
-
-
-        input,
-        button,
-        textarea {
-            font-family: "Open Sans", sans-serif;
-            font-size: 14px;
-        }
-
         .btn {
             font-family: 'Open Sans';
             font-size: 1em;
             display: flex;
             justify-content: center;
             align-items: center;
-            border: none;
-     
+            border: none;     
             color: #262626;
             border-radius: 10px;
             height: 50px;
@@ -68,16 +30,7 @@
             outline: 0;
         }
             
-        .btn-small {
-            min-width: 50px;
-            background-color:
-        }
-        
-        .btn-small:hover {
-            color: #1c319d;
-           
-        }
-        
+
         .text-field {
             padding: 10px;
             height: 50px;
@@ -116,26 +69,52 @@
             align-items: center;
             justify-content: center;
         }
-        body{
-            background-color:#6457582e;
+        body, html{
+            position:relative;
+            height: 100%;
+            font-family: 'Source Sans Pro', sans-serif;
+            font-size:18px;
+            font-weight:700;
+            margin: 0px!important;
+            padding: 0px!important;           
+            box-sizing: border-box!important;
+            top:0!important;
         }
         .card{
             border-radius:10px;
         }
-  
+ 
+    .bgimg-1 {
+        background-image: url("static/img/Currency.jpg");
+        height: 100%;
+        position: relative;
+        opacity: 0.65;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: cover;
+    }
+    
+    .caption {
+        position: absolute;
+        left: 0;
+        top: 10%;
+        width: 100%;;
+        color: #000;
+    }
+
 
     </style>
     {% block css %}
     {% endblock  %}
 </head>
+    <body>
+        <div class="bgimg-1">
   
-
-    <body  >
-        {% block body %}
-        {% endblock  %}
-
-
-        
+        </div>
+        <div class="caption">              
+            {% block body %}
+            {% endblock  %}
+            </div>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js"></script>

@@ -1,96 +1,80 @@
-{% extends 'layout.html' %}
-    {% block css %}
-    {% endblock  %}
-    {% block body %}
-    <main>
-
-        <div class="container mt-4">
-
-            <div class="card mb-4">
-                <div class="card-body">
-              
-                    <div class="row">
-                        <div class="col-md-12">
-                        <table class="table table-striped">
-            
-                            <thead>
-                                <tr>
-                                    <th>Güncel Kurlar</th>
-                                    <th></th>
-    
-                                </tr>
-                            </thead>
-                  
-                            <tbody>
-                                {% for name_curr,result in zipList %}
-                                <tr>
-                                
-                                    <td>{{name_curr}}</td>
-                                    <td>{{result|round(2, 'floor')}} {{base_curr}}</td>  
-                                                
-                                </tr>
-                                {% endfor %}
-                   
-    
-                            </tbody>
-             
-                        </table>                  
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-12">
-                            <h4 class="text-center font-bold  deep-purple-text">Tarihe göre ara</h4>
-                            <div class="calendar-assets">
-                                    <div class="field">
-                                        <form class="form-input" id="date-search" onsubmit="return setDate(this)" method="post">
-                                            <input type="date" class="text-field" name="date" id="date" required>
-                                            <button type="submit" class="btn btn-small btn-primary" title="Ara"><i class="fas fa-search text-white"></i></button>
-                                        </form>
-                                    </div>
-                            </div>
-                            <table class="table table-striped">
-            
-                                <thead>
-                                    <tr>
-                                        <th>Tarihe Göre</th>
-                                        <th></th>
-        
-                                    </tr>
-                                </thead>
-                    
-                                <tbody>
-                                    {% for name_curr,result in zipList_date %}
-                                    <tr>
-                                    
-                                        <td>{{name_curr}}</td>
-                                        <td>{{result|round(2, 'floor')}} {{base_curr}}</td>                
-                                    </tr>
-                                    {% endfor %}
-                    
-        
-                                </tbody>
-                       
-                            </table>
-                        </div>  
-                    </div> 
-                </div>
-            </div>
-
-
+{% extends 'layout.html' %} {% block css %} {% endblock %} {% block body %}
+<main>
+  <div class="container mt-4">
+    <div class="card mb-4">
+      <div class="card-body">
+        <div class="row">
+          <div class="col-md-12">
+            <table class="table table-striped">
+              <thead>
+                <tr>
+                  <th>GÜNCEL KURLAR</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for name_curr,result in zipList %}
+                <tr>
+                  <td>{{name_curr}}</td>
+                  <td>{{result|round(2, 'floor')}} {{base_curr}}</td>
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
         </div>
- 
-      
-    </main>
-  
-    {% endblock  %}
-  
-{% block js %}
-{% endblock  %}
+        <div class="row">
+          <div class="col-md-12">
+            <div class="calendar-assets">
+              <div class="field">
 
+                <form
+                  class="form-input"
+                  id="date-search"
+                  onsubmit="return setDate(this)"
+                  method="post"
+                >
+                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+                <p class="text-center pt-3 text-bolder font-bolder pr-3">
+                    TARİHE GÖRE ARA   </p>
+                  <input
+                    type="date"
+                    class="text-field pl-3"
+                    name="date"
+                    id="date"
+                    required
+                  />
+                  <button
+                    type="submit"
+                    class="btn btn-small btn-primary"
+                    title="Ara"
+                  >
+                    <i class="fas fa-search text-white"></i>
+                  </button>
+                </form>
+              </div>
+            </div>
+            <table class="table table-striped">
+              <thead>
+                <tr>
+                  <th>TARİHE GÖRE</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for name_curr,result in zipList_date %}
+                <tr>
+                  <td>{{name_curr}}</td>
+                  <td>{{result|round(2, 'floor')}} {{base_curr}}</td>
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
 
-
-
-
-
-
-
+{% endblock %} {% block js %} {% endblock %}

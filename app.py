@@ -1,9 +1,12 @@
 from flask import Flask,render_template,request
 import requests
 import os
+from flask_wtf.csrf import CSRFProtect
 from dotenv import load_dotenv
 load_dotenv() 
 app = Flask(__name__)
+app.config['SECRET_KEY'] = os.getenv("SECRET_KEY")
+csrf = CSRFProtect(app)
 
 def get_date_currency_api_1(date):
     if date == "":
@@ -43,15 +46,17 @@ def get_all_currency(date):
     return [tl,usd,eur]
 
 @app.route("/",methods = ["GET","POST"])
+@csrf.exempt
 def index():
-    name_curr=["TL","USD","EUR"]
-    result=get_all_currency(date="")
-    zipList=zip(name_curr,result)
-    if request.method == "POST":
-        date=request.form['date']
-        result=get_all_currency(date)
-        zipList_date=zip(name_curr,result)
-        return render_template("index.html",zipList_date=zipList_date,zipList=zipList,base_curr=os.getenv("BASE_CURRENCY"))
+    zipList=""
+    # name_curr=["TL","USD","EUR"]
+    # result=get_all_currency(date="")
+    # zipList=zip(name_curr,result)
+    # if request.method == "POST":
+    #     date=request.form['date']
+    #     result=get_all_currency(date)
+    #     zipList_date=zip(name_curr,result)
+    #     return render_template("index.html",zipList_date=zipList_date,zipList=zipList,base_curr=os.getenv("BASE_CURRENCY"))
     return render_template("index.html",zipList=zipList,base_curr=os.getenv("BASE_CURRENCY"))
 
 if __name__ == "__main__":
