@@ -26,7 +26,8 @@
                                 <tr>
                                 
                                     <td>{{name_curr}}</td>
-                                    <td>{{result}} </td>                
+                                    <td>{{result|round(2, 'floor')}} {{base_curr}}</td>  
+                                                
                                 </tr>
                                 {% endfor %}
                    
@@ -62,7 +63,7 @@
                                     <tr>
                                     
                                         <td>{{name_curr}}</td>
-                                        <td>{{result}}</td>                
+                                        <td>{{result|round(2, 'floor')}} {{base_curr}}</td>                
                                     </tr>
                                     {% endfor %}
                     
