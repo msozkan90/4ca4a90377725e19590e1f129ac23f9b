@@ -5,13 +5,10 @@
       <div class="card-body">
         <div class="row">
           <div class="col-md-12">
+            <p class="text-center pt-3 h5 text-bolder font-bolder pr-3">
+              GÜNCEL KURLAR
+            </p>
             <table class="table table-striped">
-              <thead>
-                <tr>
-                  <th>GÜNCEL KURLAR</th>
-                  <th></th>
-                </tr>
-              </thead>
               <tbody>
                 {% for name_curr,result in zipList %}
                 <tr>
@@ -27,16 +24,20 @@
           <div class="col-md-12">
             <div class="calendar-assets">
               <div class="field">
-
                 <form
                   class="form-input"
                   id="date-search"
                   onsubmit="return setDate(this)"
                   method="post"
                 >
-                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
-                <p class="text-center pt-3 text-bolder font-bolder pr-3">
-                    TARİHE GÖRE ARA   </p>
+                  <input
+                    type="hidden"
+                    name="csrf_token"
+                    value="{{ csrf_token() }}"
+                  />
+                  <p class="text-center pt-3 text-bolder font-bolder pr-3">
+                    TARİHE GÖRE ARA
+                  </p>
                   <input
                     type="date"
                     class="text-field pl-3"
@@ -54,13 +55,11 @@
                 </form>
               </div>
             </div>
+            {% if zipList_date == "" %} {% else %}
+            <p class="text-center pt-3 h5 text-bolder font-bolder pr-3">
+              {{date}} TARİHİNE GÖRE KURLAR
+            </p>
             <table class="table table-striped">
-              <thead>
-                <tr>
-                  <th>TARİHE GÖRE</th>
-                  <th></th>
-                </tr>
-              </thead>
               <tbody>
                 {% for name_curr,result in zipList_date %}
                 <tr>
@@ -70,6 +69,7 @@
                 {% endfor %}
               </tbody>
             </table>
+            {% endif%}
           </div>
         </div>
       </div>

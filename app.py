@@ -19,18 +19,18 @@ class CurrencyClass():
         else:
             response = requests.request("GET", "{}/{}?symbols={}%2C{}%2C{}&base={}".format(os.getenv("BASE_URL_API_1"),date,os.getenv("CURRENCY_2"),os.getenv("CURRENCY_3"),os.getenv("CURRENCY_1"),os.getenv("BASE_CURRENCY")), headers={"apikey":os.getenv("API_KEY_1")}, data = {})
         result = response.json()
-        currency_list=[result["rates"][os.getenv("CURRENCY_1")],result["rates"][os.getenv("CURRENCY_2")],result["rates"][os.getenv("CURRENCY_3")]]
+        currency_list=[result["rates"][os.getenv('CURRENCY_1')],result["rates"][os.getenv('CURRENCY_2')],result["rates"][os.getenv('CURRENCY_3')]]
         self.make_list(currency_list)
         return currency_list
     def func2(self,date):
         if date == "":   
             response = requests.request("GET","{}latest?apikey={}&base_currency={}".format(os.getenv("BASE_URL_API_2"),os.getenv("API_KEY_2"),os.getenv("BASE_CURRENCY")), headers={"apikey":os.getenv("API_KEY_2")}, data = {})
             result = response.json()
-            currency_list=[result["data"][os.getenv("CURRENCY_1")],result["data"][os.getenv("CURRENCY_2")],result["data"][os.getenv("CURRENCY_3")]]
+            currency_list=[result["data"][os.getenv('CURRENCY_1')],result["data"][os.getenv('CURRENCY_2')],result["data"][os.getenv('CURRENCY_3')]]
         else:
             response = requests.request("GET", "{}historical?apikey={}&date_from={}&date_to={}&base_currency={}".format(os.getenv("BASE_URL_API_2"),os.getenv("API_KEY_2"),date,date,os.getenv("BASE_CURRENCY")), headers={"apikey":os.getenv("API_KEY_2")}, data = {})
             result = response.json()
-            currency_list=[result["data"][date][os.getenv("CURRENCY_1")],result["data"][date][os.getenv("CURRENCY_2")],result["data"][date][os.getenv("CURRENCY_2")]]
+            currency_list=[result["data"][date][os.getenv('CURRENCY_1')],result["data"][date][os.getenv('CURRENCY_2')],result["data"][date][os.getenv('CURRENCY_3')]]
         self.make_list(currency_list)
     
     def make_list(self,list_curr):
@@ -46,18 +46,20 @@ class CurrencyClass():
 @app.route("/",methods = ["GET","POST"])
 @csrf.exempt
 def index():
-    run = CurrencyClass(TRY=[],USD=[],EUR=[])
-    result=run.run_all(date="") 
-    #zipList=""
-    name_curr=["TL","USD","EUR"]
-    zipList=zip(name_curr,result)
-    if request.method == "POST":
-        run = CurrencyClass(TRY=[],USD=[],EUR=[])
-        date=request.form['date']
-        result=run.run_all(date)
-        zipList_date=zip(name_curr,result)
-        return render_template("index.html",zipList_date=zipList_date,zipList=zipList,base_curr=os.getenv("BASE_CURRENCY"))
-    return render_template("index.html",zipList=zipList,base_curr=os.getenv("BASE_CURRENCY"))
+    zipList=""
+    zipList_date=""
+    # run = CurrencyClass(TRY=[],USD=[],EUR=[])
+    # result=run.run_all(date="") 
+
+    # name_curr=[os.getenv("CURRENCY_1"),os.getenv("CURRENCY_2"),os.getenv("CURRENCY_3")]
+    # zipList=zip(name_curr,result)
+    # if request.method == "POST":
+    #     run = CurrencyClass(TRY=[],USD=[],EUR=[])
+    #     date=request.form['date']
+    #     result=run.run_all(date)
+    #     zipList_date=zip(name_curr,result)
+    #     return render_template("index.html",zipList_date=zipList_date,zipList=zipList,base_curr=os.getenv("BASE_CURRENCY"),date=date)
+    return render_template("index.html",zipList=zipList,zipList_date=zipList_date,base_curr=os.getenv("BASE_CURRENCY"))
 
 if __name__ == "__main__":
     app.run(debug=True)
