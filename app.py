@@ -48,17 +48,16 @@ class CurrencyClass():
 def index():
     zipList=""
     zipList_date=""
-    # run = CurrencyClass(TRY=[],USD=[],EUR=[])
-    # result=run.run_all(date="") 
-
-    # name_curr=[os.getenv("CURRENCY_1"),os.getenv("CURRENCY_2"),os.getenv("CURRENCY_3")]
-    # zipList=zip(name_curr,result)
-    # if request.method == "POST":
-    #     run = CurrencyClass(TRY=[],USD=[],EUR=[])
-    #     date=request.form['date']
-    #     result=run.run_all(date)
-    #     zipList_date=zip(name_curr,result)
-    #     return render_template("index.html",zipList_date=zipList_date,zipList=zipList,base_curr=os.getenv("BASE_CURRENCY"),date=date)
+    run = CurrencyClass(TRY=[],USD=[],EUR=[])
+    result=run.run_all(date="") 
+    name_curr=[os.getenv("CURRENCY_1"),os.getenv("CURRENCY_2"),os.getenv("CURRENCY_3")]
+    zipList=zip(name_curr,result)
+    if request.method == "POST":
+        run = CurrencyClass(TRY=[],USD=[],EUR=[])
+        date=request.form['date']
+        result=run.run_all(date)
+        zipList_date=zip(name_curr,result)
+        return render_template("index.html",zipList_date=zipList_date,zipList=zipList,base_curr=os.getenv("BASE_CURRENCY"),date=date)
     return render_template("index.html",zipList=zipList,zipList_date=zipList_date,base_curr=os.getenv("BASE_CURRENCY"))
 
 if __name__ == "__main__":

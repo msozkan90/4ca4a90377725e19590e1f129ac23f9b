@@ -5,7 +5,7 @@
       <div class="card-body">
         <div class="row">
           <div class="col-md-12">
-            <p class="text-center pt-3 h5 text-bolder font-bolder pr-3">
+            <p class="text-center pt-3 h5 font-weight-bold pr-3">
               GÜNCEL KURLAR
             </p>
             <table class="table table-striped">
@@ -24,52 +24,62 @@
           <div class="col-md-12">
             <div class="calendar-assets">
               <div class="field">
-                <form
-                  class="form-input"
-                  id="date-search"
-                  onsubmit="return setDate(this)"
-                  method="post"
-                >
-                  <input
-                    type="hidden"
-                    name="csrf_token"
-                    value="{{ csrf_token() }}"
-                  />
-                  <p class="text-center pt-3 text-bolder font-bolder pr-3">
-                    TARİHE GÖRE ARA
-                  </p>
-                  <input
-                    type="date"
-                    class="text-field pl-3"
-                    name="date"
-                    id="date"
-                    required
-                  />
-                  <button
-                    type="submit"
-                    class="btn btn-small btn-primary"
-                    title="Ara"
+                <div class="row">
+                  <div class="col-md-3 col-12">
+                    <p class="text-center pt-3 text-bolder font-bolder">
+                      TARİH GİR
+                    </p>
+                  </div>
+                  <div class="col-md-9 col-12">
+                    <form
+                    class="form-input"
+                    id="date-search"
+                    onsubmit="return setDate(this)"
+                    method="post"
                   >
-                    <i class="fas fa-search text-white"></i>
-                  </button>
-                </form>
+                    <input
+                      type="hidden"
+                      name="csrf_token"
+                      value="{{ csrf_token() }}"
+                    />
+  
+                    <input
+                      type="date"
+                      class="text-field pl-3"
+                      name="date"
+                      id="date"
+                      required
+                    />
+                    <button
+                      type="submit"
+                      class="btn btn-small btn-primary"
+                      title="Ara"
+                    >
+                      <i class="fas fa-search text-white"></i>
+                    </button>
+                  </form>
+                  </div>
+                </div>
+
               </div>
             </div>
-            {% if zipList_date == "" %} {% else %}
-            <p class="text-center pt-3 h5 text-bolder font-bolder pr-3">
-              {{date}} TARİHİNE GÖRE KURLAR
-            </p>
-            <table class="table table-striped">
-              <tbody>
-                {% for name_curr,result in zipList_date %}
-                <tr>
-                  <td>{{name_curr}}</td>
-                  <td>{{result|round(2, 'floor')}} {{base_curr}}</td>
-                </tr>
-                {% endfor %}
-              </tbody>
-            </table>
-            {% endif%}
+                {% if zipList_date == "" %} 
+                {% else %}          
+                  <p class="text-center pt-3 h5 font-weight-bold pr-3">
+                    {{date}} TARİHİNE GÖRE KURLAR
+                  </p>
+                  <table class="table table-striped">
+                    <tbody>
+                      {% for name_curr,result in zipList_date %}
+                      <tr>
+                        <td>{{name_curr}}</td>
+                        <td>{{result|round(2, 'floor')}} {{base_curr}}</td>
+                      </tr>
+                      {% endfor %}
+                    </tbody>
+                  </table>               
+                {% endif%}
+            </div>
           </div>
         </div>
       </div>
