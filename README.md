@@ -8,7 +8,7 @@ First of all we need to create virtual environment.
 python -m venv venv (windows)
 python3 -m venv venv (macOS)
 ```
-
+You need to change .env_example file name to .env
 Use the package manager [pip](https://pip.pypa.io/en/stable/) to install inside of requirements.
 You can run the application easily with below code
 
