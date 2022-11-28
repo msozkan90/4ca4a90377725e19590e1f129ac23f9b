@@ -33,8 +33,7 @@
                   <div class="col-md-9 col-12">
                     <form
                     class="form-input"
-                    id="date-search"
-                    onsubmit="return setDate(this)"
+                    id="date-search"                   
                     method="post"
                   >
                     <input
@@ -48,6 +47,7 @@
                       class="text-field pl-3"
                       name="date"
                       id="date"
+                      data-provide="datepicker"
                       required
                     />
                     <button
@@ -87,4 +87,23 @@
   </div>
 </main>
 
-{% endblock %} {% block js %} {% endblock %}
+{% endblock %} 
+{% block js %}
+<script>
+  $(function(){
+    var dtToday = new Date();
+
+    var month = dtToday.getMonth() + 1;
+    var day = dtToday.getDate();
+    var year = dtToday.getFullYear();
+    if(month < 10)
+        month = '0' + month.toString();
+    if(day < 10)
+        day = '0' + day.toString();
+
+    var minDate= year + '-' + month + '-' + day;
+
+    $('#date').attr('max', minDate);
+});
+</script>
+{% endblock %}

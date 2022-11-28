@@ -46,7 +46,6 @@ class CurrencyClass():
 @app.route("/",methods = ["GET","POST"])
 @csrf.exempt
 def index():
-    zipList=""
     zipList_date=""
     run = CurrencyClass(TRY=[],USD=[],EUR=[])
     result=run.run_all(date="") 
